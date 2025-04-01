@@ -1,7 +1,7 @@
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
-import { payload } from "../dto/user.dto";
+import { Payload } from "../dto/user.dto";
 
 dotenv.config();
 const { JWT_SECRET = "" } = process.env;
@@ -13,7 +13,7 @@ export class encrypt {
     return bcrypt.compareSync(password, hashPassword);
   }
 
-  static generateToken(payload: payload) {
+  static generateToken(payload: Payload) {
     return jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });
   }
 }

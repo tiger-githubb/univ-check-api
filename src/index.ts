@@ -9,11 +9,12 @@ import { authRouter } from "./routes/auth.routes";
 dotenv.config();
 
 const app = express();
+const globalPath = '/api/v1';
 app.use(express.json());
 const { PORT = 3000 } = process.env;
 app.use(errorHandler);
-app.use("/api/auth", authRouter);
-app.use("/api/users", userRouter);
+app.use(`${globalPath}/auth`, authRouter);
+app.use(`${globalPath}/users`, userRouter);
 
 app.get("*", (req: Request, res: Response) => {
   res.status(505).json({ message: "Bad Request" });
