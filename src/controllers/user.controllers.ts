@@ -5,6 +5,7 @@ import * as cache from "memory-cache";
 import { User } from "../entity/user.entity";
 
 export class UserController {
+  private static userRepository = AppDataSource.getRepository(User);
   static async signup(req: Request, res: Response) {
     const { name, email, password, role } = req.body;
     const encryptedPassword = await encrypt.encryptpass(password);
@@ -14,8 +15,8 @@ export class UserController {
     user.password = encryptedPassword;
     user.role = role;
 
-    const userRepository = AppDataSource.getRepository(User);
-    await userRepository.save(user);
+    // const userRepository = AppDataSource.getRepository(User);
+    await this.userRepository.save(user);
 
     // userRepository.create({ Name, email, password });
     const token = encrypt.generateToken({ id: user.id });
@@ -33,8 +34,8 @@ export class UserController {
       });
     } else {
       console.log("serving from db");
-      const userRepository = AppDataSource.getRepository(User);
-      const users = await userRepository.find();
+      // const userRepository = AppDataSource.getRepository(User);
+      const users = await this.userRepository.find();
 
       cache.put("data", users, 6000);
       return res.status(200).json({
@@ -45,23 +46,23 @@ export class UserController {
   static async updateUser(req: Request, res: Response) {
     const { id } = req.params;
     const { name, email } = req.body;
-    const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOne({
+    // const userRepository = AppDataSource.getRepository(User);
+    const user = await this.userRepository.findOne({
       where: { id },
     });
     user.name = name;
     user.email = email;
-    await userRepository.save(user);
+    await this.userRepository.save(user);
     res.status(200).json({ message: "udpdate", user });
   }
 
   static async deleteUser(req: Request, res: Response) {
     const { id } = req.params;
-    const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOne({
+    // const userRepository = AppDataSource.getRepository(User);
+    const user = await this.userRepository.findOne({
       where: { id },
     });
-    await userRepository.remove(user);
+    await this.userRepository.remove(user);
     res.status(200).json({ message: "ok" });
   }
 }

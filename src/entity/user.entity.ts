@@ -2,12 +2,11 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    CreateDateColumn,
-    UpdateDateColumn,
   } from "typeorm";
+import { ATimestamp } from "./abstract/timestamp";
   
   @Entity('users')
-  export class User {
+  export class User extends ATimestamp {
     @PrimaryGeneratedColumn("uuid")
     id: string;
   
@@ -22,10 +21,4 @@ import {
   
     @Column({ default: "user" })
     role: string;
-  
-    @CreateDateColumn()
-    createdAt: Date;
-  
-    @UpdateDateColumn()
-    updatedAt: Date;
   }

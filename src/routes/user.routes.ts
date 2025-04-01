@@ -6,7 +6,7 @@ import { AuthController } from "../controllers/auth.controller";
 const Router = express.Router();
 
 Router.get(
-  "/users",
+  "/",
   authentification,
   authorization(["admin"]),
   UserController.getUsers
@@ -17,16 +17,15 @@ Router.get(
   authorization(["user", "admin"]),
   AuthController.getProfile
 );
-Router.post("/signup", UserController.signup);
-Router.post("/login", AuthController.login);
-Router.put(
-  "/update/:id",
+Router.post("/", authentification, UserController.signup);
+Router.patch(
+  "/:id",
   authentification,
   authorization(["user", "admin"]),
   UserController.updateUser
 );
 Router.delete(
-  "/delete/:id",
+  "/:id",
   authentification,
   authorization(["admin"]),
   UserController.deleteUser
