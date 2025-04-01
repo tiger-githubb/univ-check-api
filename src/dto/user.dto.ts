@@ -1,8 +1,13 @@
-export class Userresponce {
+import { RoleEnum } from "../entity/user.entity";
+
+export class CreateUserDTO {
   name: string;
   email: string;
-  role: string;
+  phone: string;
+  role: RoleEnum;
+  password: string;
 }
-export type payload = {
-  id: string;
+export type Payload = {
+  id?: string;
+  email: string;
 };

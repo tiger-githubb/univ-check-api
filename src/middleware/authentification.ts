@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
+import { Payload } from "../dto/user.dto";
+import { AuthController } from "../controllers/auth.controller";
 dotenv.config();
 
 export const authentification = (
@@ -16,10 +18,12 @@ export const authentification = (
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
-  const decode = jwt.verify(token, process.env.JWT_SECRET);
-  if (!decode) {
+  const payload = <Payload>jwt.verify(token, process.env.JWT_SECRET);
+  if (!payload) {
     return res.status(401).json({ message: "Unauthorized" });
   }
-  req[" currentUser"] = decode;
+  const user = AuthController.search(payload);
+  if (!user) return res.status(401).json({ message: "Unauthorized" });
+  req["currentUser"] = payload;
   next();
 };

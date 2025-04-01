@@ -10,6 +10,7 @@
       "build": "tsc",
       "start": "ts-node src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
+      "migrate:create": "npx typeorm migration:create ./src/migration/users",
       "migration": "npm run typeorm migration:run -- -d ./src/data-source.ts"
    },
    "devDependencies": {
