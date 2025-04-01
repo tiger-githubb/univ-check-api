@@ -4,6 +4,13 @@ A scalable, stateless RESTful API for academic attendance management. Features R
 
 Steps to run this project:
 
-1. Run `npm i` command
+## YARN
+1. Run `yarn` command
 2. Setup database settings inside `data-source.ts` file
-3. Run `npm start` command
+3. Run migration with `yarn migration`
+3. Run `yarn start` command or `yarn dev` for watch mode
+
+## NPM
+1. Run `npm i` command
+2. Run migration with `npm run migration`
+3. Run `npm run start` command or `npm run dev` for watch mode
