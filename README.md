@@ -1,5 +1,4 @@
 # univ-check-api
-# Awesome Project Build with TypeORM
 A scalable, stateless RESTful API for academic attendance management. Features RBAC authentication (JWT), event-driven attendance validation, optimized query performance, and modular service-layer architecture. Supports multi-tenancy, request validation, and high concurrency handling.
 
 Steps to run this project:
@@ -15,7 +14,8 @@ Steps to run this project:
 2. Run migration with `npm run migration`
 3. Run `npm run start` command or `npm run dev` for watch mode
 
-This will create the following user and team:
+## ADMIN USER
+The previous command will create the following user:
 
 - User: `univ.admin@gmail.com`
 - Password: `_KUSO58AD@`
