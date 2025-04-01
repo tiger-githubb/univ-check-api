@@ -32,7 +32,7 @@ export class AuthController {
 
       return res.status(200).json({ token, ...user, password: undefined });
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }

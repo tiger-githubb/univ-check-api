@@ -14,3 +14,8 @@ Steps to run this project:
 1. Run `npm i` command
 2. Run migration with `npm run migration`
 3. Run `npm run start` command or `npm run dev` for watch mode
+
+This will create the following user and team:
+
+- User: `univ.admin@gmail.com`
+- Password: `_KUSO58AD@`

@@ -6,6 +6,8 @@ import { userRouter } from "./routes/user.routes";
 import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
 import { authRouter } from "./routes/auth.routes";
+import { UserController } from "./controllers/user.controllers";
+import { RoleEnum } from "./entity/user.entity";
 dotenv.config();
 
 const app = express();
@@ -24,6 +26,13 @@ AppDataSource.initialize()
   .then(async () => {
     app.listen(PORT, () => {
       console.log("Server is running on http://localhost:" + PORT);
+    });
+    UserController.seeder({
+      name: 'Univ Admin',
+      email: 'univ.admin@gmail.com',
+      role: RoleEnum.ADMIN,
+      phone: '+228 90000090',
+      password: '_KUSO58AD@',
     });
     console.log("Data Source has been initialized!");
   })

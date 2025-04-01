@@ -5,12 +5,10 @@ import * as cache from "memory-cache";
 import { User } from "../entity/user.entity";
 import { CreateUserDTO } from "../dto/user.dto";
 
-export class UserController {
-  static async signup(req: Request, res: Response) {
-    const { name, email, phone, password, role } = <CreateUserDTO>req.body;
-    if (!name || !email || !phone || !password || !role) {
-      return res.status(400).json({ message: 'Bad request' })
-    }
+export abstract class UserFactory {
+  static async create(data: CreateUserDTO) {
+    const { name, email, phone, password, role } = data;
+
     const encryptedPassword = await encrypt.encryptpass(password);
     const user = new User();
     user.name = name;
@@ -18,13 +16,33 @@ export class UserController {
     user.phone = phone;
     user.password = encryptedPassword;
     user.role = role;
+    return user;
+  }
+}
+
+export class UserController {
+  static async seeder(data: CreateUserDTO): Promise<User> {
+    const { email } = data;
+
+    const userRepository = AppDataSource.getRepository(User);
+    const existedUser = await userRepository.findOneBy({email});
+    if (!existedUser) {
+      return await userRepository.save(await UserFactory.create(data));
+    }
+  }
+  static async signup(req: Request, res: Response) {
+    const data = <CreateUserDTO>req.body;
+    const { name, email, phone, password, role } = data;
+    if (!name || !email || !phone || !password || !role) {
+      return res.status(400).json({ message: 'Bad request' })
+    }
 
     const userRepository = AppDataSource.getRepository(User);
     const existedUser = await userRepository.findOneBy({email});
     if (existedUser) {
       return res.status(409).json({ message: 'Email allready exists !'})
     }
-    await userRepository.save(user);
+    const user = await userRepository.save(await UserFactory.create(data));
 
     const token = encrypt.generateToken({ id: user.id, email });
 
@@ -32,6 +50,7 @@ export class UserController {
       .status(200)
       .json({ token, ...user, password: undefined });
   }
+
   static async getUsers(req: Request, res: Response) {
     const data = cache.get("data");
     if (data) {
