@@ -64,9 +64,7 @@ export class UserController {
       const users = await userRepository.find({select: {name: true, email: true, role: true, id: true}});
 
       cache.put("data", users, 6000);
-      return res.status(200).json({
-        data: users,
-      });
+      return res.status(200).json(users);
     }
   }
   static async updateUser(req: Request, res: Response) {
