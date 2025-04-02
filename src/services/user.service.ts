@@ -1,6 +1,6 @@
 import { AppDataSource } from "../config/data-source";
 import { User } from "../entity/User.entity";
-import bcrypt from "bcrypt";
+import * as bcrypt from 'bcrypt';
 
 export class UserService {
     private userRepository = AppDataSource.getRepository(User);
