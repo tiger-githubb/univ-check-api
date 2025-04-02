@@ -1,4 +1,4 @@
-import { AppDataSource } from "./data-source";
+import {AppDataSource, connectDB} from "./config/data-source";
 import * as express from "express";
 import * as dotenv from "dotenv";
 import { Request, Response } from "express";
@@ -7,7 +7,7 @@ import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
 import { authRouter } from "./routes/auth.routes";
 import { UserController } from "./controllers/user.controllers";
-import { RoleEnum } from "./entity/user.entity";
+import { RoleEnum } from "./models/user.model";
 dotenv.config();
 
 const app = express();
@@ -15,6 +15,9 @@ const globalPath = '/api/v1';
 app.use(express.json());
 const { PORT = 3000 } = process.env;
 app.use(errorHandler);
+
+connectDB();
+
 app.use(`${globalPath}/auth`, authRouter);
 app.use(`${globalPath}/users`, userRouter);
 

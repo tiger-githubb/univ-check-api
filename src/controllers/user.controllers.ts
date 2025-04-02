@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../config/data-source";
 import { encrypt } from "../helpers/encrypt";
 import * as cache from "memory-cache";
-import { User } from "../entity/user.entity";
+import { User } from "../models/user.model";
 import { CreateUserDTO } from "../dto/user.dto";
 
 export abstract class UserFactory {

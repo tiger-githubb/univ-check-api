@@ -11,7 +11,7 @@
       "start": "ts-node src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
       "migrate:create": "npx typeorm migration:create ./src/migration/users",
-      "migration": "npm run typeorm migration:run -- -d ./src/data-source.ts"
+      "migration": "npm run typeorm migration:run -- -d src/config/data-source.ts"
    },
    "devDependencies": {
       "@types/bcrypt": "^5.0.1",

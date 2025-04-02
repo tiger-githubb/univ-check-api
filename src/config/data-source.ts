@@ -1,6 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { User } from "./entity/user.entity"
+import { User } from "../models/user.model"
 
 import * as dotenv from "dotenv";
 
@@ -22,3 +22,12 @@ export const AppDataSource = new DataSource({
   migrations: [__dirname + "/migration/*.ts"],
   subscribers: [],
 });
+
+export const connectDB = async () => {
+  try {
+    await AppDataSource.initialize();
+    console.log("Database connected successfully!");
+  } catch (error) {
+    console.error("Database connection failed:", error);
+  }
+};
