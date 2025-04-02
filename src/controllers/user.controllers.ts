@@ -1,92 +1,112 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../config/data-source";
-import { encrypt } from "../helpers/encrypt";
 import * as cache from "memory-cache";
-import { User } from "../entity/User.entity";
-import { CreateUserDTO } from "../dto/user.dto";
+import { UserService } from "../services/user.service";
+import { CreateUserDto } from "../dto/user.dto";
+import {User} from "../entity/User.entity";
 
-export abstract class UserFactory {
-  static async create(data: CreateUserDTO) {
-    const { name, email, phone, password, role } = data;
+const userService = new UserService();
 
-    const encryptedPassword = await encrypt.encryptpass(password);
-    const user = new User();
-    user.name = name;
-    user.email = email;
-    user.phone = phone;
-    user.password = encryptedPassword;
-    user.role = role;
-    return user;
-  }
-}
-
-export class UserController {
-  static async seeder(data: CreateUserDTO): Promise<User> {
-    const { email } = data;
-
-    const userRepository = AppDataSource.getRepository(User);
-    const existedUser = await userRepository.findOneBy({email});
-    if (!existedUser) {
-      return await userRepository.save(await UserFactory.create(data));
+export const createUser = async (req: Request, res: Response) => {
+  try {
+    const data = req.body as CreateUserDto;
+    // Vérifier si un utilisateur avec cet email existe déjà
+    const existingUser = await userService.getUserByEmail(data.email);
+    if (existingUser) {
+      return res.status(409).json({ message: "Email already exists!" });
     }
+    const userData: Partial<User> = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      password: data.password, // On pourra chiffrer ici ou dans le service
+      role: data.role
+    };
+
+    // Créer l'utilisateur
+    const user = await userService.createUser(userData);
+    // Renvoie l'utilisateur créé sans le mot de passe
+    return res.status(201).json({ ...user, password: undefined });
+  } catch (error) {
+    return res.status(500).json({ message: "Erreur lors de la création de l'utilisateur", error });
   }
-  static async signup(req: Request, res: Response) {
-    const data = <CreateUserDTO>req.body;
-    const { name, email, phone, password, role } = data;
-    if (!name || !email || !phone || !password || !role) {
-      return res.status(400).json({ message: 'Bad request' })
-    }
+};
 
-    const userRepository = AppDataSource.getRepository(User);
-    const existedUser = await userRepository.findOneBy({email});
-    if (existedUser) {
-      return res.status(409).json({ message: 'Email allready exists !'})
-    }
-    const user = await userRepository.save(await UserFactory.create(data));
-
-    const token = encrypt.generateToken({ id: user.id, email });
-
-    return res
-      .status(200)
-      .json({ token, ...user, password: undefined });
+export const getUserById = async (req: Request, res: Response) => {
+  try {
+    const user = await userService.getUserById(req.params.id);
+    if (!user) return res.status(404).json({ message: "Utilisateur non trouvé" });
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).json({ message: "Erreur lors de la récupération de l'utilisateur", error });
   }
+};
 
-  static async getUsers(req: Request, res: Response) {
-    const data = cache.get("data");
-    if (data) {
-      console.log("serving from cache");
-      return res.status(200).json({
-        data,
-      });
-    } else {
-      console.log("serving from db");
-      const userRepository = AppDataSource.getRepository(User);
-      const users = await userRepository.find({select: {name: true, email: true, role: true, id: true}});
-
-      cache.put("data", users, 6000);
-      return res.status(200).json(users);
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const cacheKey = "users-list";
+    const cachedUsers = cache.get(cacheKey);
+    if (cachedUsers) {
+      console.log("Serving from cache");
+      return res.status(200).json(cachedUsers);
     }
+    console.log("Serving from DB");
+    const users = await userService.getAllUsers();
+    // Stocke les utilisateurs en cache pour 6000 ms (6 secondes)
+    cache.put(cacheKey, users, 6000);
+    return res.status(200).json(users);
+  } catch (error) {
+    return res.status(500).json({ message: "Erreur lors de la récupération des utilisateurs", error });
   }
-  static async updateUser(req: Request, res: Response) {
+};
+
+export const updateUser = async (req: Request, res: Response) => {
+  try {
     const { id } = req.params;
-    const { name, email } = req.body;
-    const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOne({
-      where: { id },
-    });
-    user.name = name;
-    user.email = email;
-    await userRepository.save(user);
-    res.status(200).json(user);
+    const { email } = req.body;
+    // Récupère l'utilisateur existant
+    const user = await userService.getUserById(id);
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+    // Si l'email est mis à jour, vérifier qu'il n'est pas déjà utilisé
+    if (email && email !== user.email) {
+      const existingUser = await userService.getUserByEmail(email);
+      if (existingUser) {
+        return res.status(409).json({ message: "Email already exists!" });
+      }
+    }
+    const updatedUser = await userService.updateUser(id, req.body);
+    // Vider le cache pour forcer l'actualisation
+    cache.del("users-list");
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    return res.status(500).json({ message: "Erreur lors de la mise à jour de l'utilisateur", error });
   }
+};
 
-  static async deleteUser(req: Request, res: Response) {
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
     const { id } = req.params;
-    const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOne({
-      where: { id },
-    });
-    await userRepository.remove(user);
-    res.status(200).json({ message: "ok" });
+    // Vérifier que l'utilisateur existe
+    const user = await userService.getUserById(id);
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+    await userService.deleteUser(id);
+    // Vider le cache après suppression
+    cache.del("users-list");
+    return res.status(204).send();
+  } catch (error) {
+    return res.status(500).json({ message: "Erreur lors de la suppression de l'utilisateur", error });
   }
-}
+};
+
+export const getUserByEmail = async (req: Request, res: Response) => {
+  try {
+    const user = await userService.getUserByEmail(req.params.email);
+    if (!user) return res.status(404).json({ message: "Utilisateur non trouvé" });
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).json({ message: "Erreur lors de la récupération de l'utilisateur", error });
+  }
+};
