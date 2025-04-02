@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../config/data-source";
-import { User } from "../models/user.model";
+import { User } from "../entity/User";
 import { encrypt } from "../helpers/encrypt";
 import { Payload } from "../dto/user.dto";
 

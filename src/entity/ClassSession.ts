@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { AcademicYear } from "./academic_year.model";
-import { Subject } from "./subject.model";
-import {User} from "./user.model";
+import { AcademicYear } from "./AcademicYear";
+import { Subject } from "./Subject";
+import {User} from "./User";
 
 @Entity()
 export class ClassSession {

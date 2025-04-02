@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
-import { Departement } from "./departement.model";
-import { Subject } from "./subject.model";
-import {User} from "./user.model";
+import { Departement } from "./Departement";
+import { Subject } from "./Subject";
+import {User} from "./User";
 
 @Entity()
 export class Programme {

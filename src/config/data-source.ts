@@ -1,8 +1,16 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { User } from "../models/user.model"
-
 import * as dotenv from "dotenv";
+import {AcademicYear} from "../entity/AcademicYear";
+import {Organisation} from "../entity/Organisation";
+import {Universite} from "../entity/Universite";
+import {Departement} from "../entity/Departement";
+import {Programme} from "../entity/Programme";
+import {ClassSession} from "../entity/ClassSession";
+import {Subject} from "../entity/Subject";
+import {Emargement} from "../entity/Emargement";
+import {Notification} from "../entity/Notification";
+import { User } from "../entity/User"
 
 dotenv.config();
 
@@ -18,7 +26,7 @@ export const AppDataSource = new DataSource({
   database: DB_DATABASE,
   synchronize: NODE_ENV === "dev" ? true : false,
   logging: NODE_ENV === "dev" ? false : false,
-  entities: [User],
+  entities: [Organisation, Universite,Departement,Programme,AcademicYear, ClassSession, Subject,Emargement, Notification, User],
   migrations: [__dirname + "/migration/*.ts"],
   subscribers: [],
 });
