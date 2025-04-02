@@ -27,7 +27,7 @@ export const AppDataSource = new DataSource({
   synchronize: NODE_ENV === "dev" ? true : false,
   logging: NODE_ENV === "dev" ? false : false,
   entities: [Organisation, Universite,Departement,Programme,AcademicYear, ClassSession, Subject,Emargement, Notification, User],
-  migrations: [__dirname + "/migration/*.ts"],
+  migrations: ["src/migration/*.ts"],
   subscribers: [],
 });
 
