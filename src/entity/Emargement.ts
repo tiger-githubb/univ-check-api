@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from "typeorm";
-import { ClassSession } from "./class_session.model";
-import {User} from "./user.model";
+import { ClassSession } from "./ClassSession";
+import {User} from "./User";
 
 @Entity()
 export class Emargement {

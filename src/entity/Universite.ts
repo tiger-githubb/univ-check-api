@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn, ManyToOne } from "typeorm";
-import { Departement } from "./departement.model";
-import { Organisation } from "./organisation.model";
-import {User} from "./user.model";
+import { Departement } from "./Departement";
+import { Organisation } from "./Organisation";
+import {User} from "./User";
 
 @Entity()
 export class Universite {

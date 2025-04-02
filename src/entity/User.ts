@@ -1,9 +1,9 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable} from "typeorm";
 import { ATimestamp } from "./abstract/timestamp";
-import {ClassSession} from "./class_session.model";
-import {Programme} from "./programme.model";
-import {Subject} from "./subject.model";
-import {Emargement} from "./emargement.model";
+import {ClassSession} from "./ClassSession";
+import {Programme} from "./Programme";
+import {Subject} from "./Subject";
+import {Emargement} from "./Emargement";
 
 export enum RoleEnum {
   USER = 'USER',
