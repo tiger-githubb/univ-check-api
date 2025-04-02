@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from "typeorm";
-import { Emargement } from "./Emargement";
-import {User} from "./User";
+import { Emargement } from "./Emargement.entity";
+import {User} from "./User.entity";
 
 @Entity()
 export class Notification {

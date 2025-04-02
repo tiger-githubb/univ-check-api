@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
-import { Programme } from "./Programme";
-import { ClassSession } from "./ClassSession";
+import { Programme } from "./Programme.entity";
+import { ClassSession } from "./ClassSession.entity";
 
 @Entity()
 export class Subject {
