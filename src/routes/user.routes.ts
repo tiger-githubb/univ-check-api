@@ -1,34 +1,23 @@
-import * as express from "express";
-import { authentification } from "../middleware/authentification";
-import { UserController } from "../controllers/user.controllers";
-import { authorization } from "../middleware/authorization";
-import { AuthController } from "../controllers/auth.controller";
-import { RoleEnum } from "../entity/User.entity";
-const Router = express.Router();
+import {authentification} from "../middleware/authentification";
+import {authorization} from "../middleware/authorization";
+import {RoleEnum} from "../entity/User.entity";
+import {Router} from "express";
+import {
+    createUser,
+    deleteUser,
+    getAllUsers,
+    getUserByEmail,
+    getUserById,
+    updateUser
+} from '../controllers/user.controllers';
 
-Router.get(
-  "/",
-  authentification,
-  authorization([RoleEnum.ADMIN]),
-  UserController.getUsers
-);
-Router.get(
-  "/profile",
-  authentification,
-  // authorization([RoleEnum.USER, RoleEnum.DELEGATE, RoleEnum.ADMIN]),
-  AuthController.getProfile
-);
-Router.post("/", authentification, UserController.signup);
-Router.patch(
-  "/:id",
-  authentification,
-  authorization([RoleEnum.USER, RoleEnum.ADMIN]),
-  UserController.updateUser
-);
-Router.delete(
-  "/:id",
-  authentification,
-  authorization([RoleEnum.ADMIN]),
-  UserController.deleteUser
-);
-export { Router as userRouter };
+const userRouter = Router();
+
+userRouter.post('/', authentification,createUser);
+userRouter.get('/', authentification, authorization([RoleEnum.ADMIN]), getAllUsers);
+userRouter.get('/email/:email', authentification, getUserByEmail);
+userRouter.get('/:id', authentification, getUserById);
+userRouter.put('/:id', authentification, authorization([RoleEnum.ADMIN, RoleEnum.USER]),updateUser);
+userRouter.delete('/:id', deleteUser);
+
+export default userRouter;
