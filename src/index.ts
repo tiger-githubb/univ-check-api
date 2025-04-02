@@ -7,7 +7,7 @@ import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
 import { authRouter } from "./routes/auth.routes";
 import { UserController } from "./controllers/user.controllers";
-import { RoleEnum } from "./entity/User";
+import { RoleEnum } from "./entity/User.entity";
 dotenv.config();
 
 const app = express();

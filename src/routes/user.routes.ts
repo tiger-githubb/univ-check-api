@@ -3,7 +3,7 @@ import { authentification } from "../middleware/authentification";
 import { UserController } from "../controllers/user.controllers";
 import { authorization } from "../middleware/authorization";
 import { AuthController } from "../controllers/auth.controller";
-import { RoleEnum } from "../entity/User";
+import { RoleEnum } from "../entity/User.entity";
 const Router = express.Router();
 
 Router.get(

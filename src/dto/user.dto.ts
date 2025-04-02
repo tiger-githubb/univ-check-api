@@ -1,4 +1,4 @@
-import { RoleEnum } from "../entity/User";
+import { RoleEnum } from "../entity/User.entity";
 
 export class CreateUserDTO {
   name: string;
