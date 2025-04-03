@@ -1,16 +1,24 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import { ATimestamp } from "./abstract/timestamp";
-import {ClassSession} from "./ClassSession.entity";
-import {Programme} from "./Programme.entity";
-import {Subject} from "./Subject.entity";
-import {Emargement} from "./Emargement.entity";
+import { ClassSession } from "./ClassSession.entity";
+import { Programme } from "./Programme.entity";
+import { Subject } from "./Subject.entity";
+import { Emargement } from "./Emargement.entity";
 
 export enum RoleEnum {
-  USER = 'USER',
-  ADMIN = 'ADMIN',
-  TEACHER = 'TEACHER',
-  SUPERVISOR = 'SUPERVISOR',
-  DELEGATE = 'DELEGATE',
+  USER = "USER",
+  ADMIN = "ADMIN",
+  TEACHER = "TEACHER",
+  SUPERVISOR = "SUPERVISOR",
+  DELEGATE = "DELEGATE",
 }
 
 @Entity("users")
