@@ -31,3 +31,4 @@ userRouter.put('/:id', authentification, authorization([RoleEnum.ADMIN, RoleEnum
 userRouter.delete('/:id', deleteUser);
 
 export default userRouter;
+
