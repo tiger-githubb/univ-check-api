@@ -1,0 +1,45 @@
+{
+   "name": "univ-attendance-system-api",
+   "version": "0.0.1",
+   "description": "University attendance system API.",
+   "type": "commonjs",
+   "scripts": {
+      "watch": "tsc -w",
+      "dev": "nodemon",
+      "start:dev": "concurrently \"tsc -w\" \"nodemon build/index.js\"",
+      "build": "tsc",
+      "start": "ts-node src/index.ts",
+      "typeorm": "typeorm-ts-node-commonjs",
+      "migration:create": "typeorm migration:create src/migration/MigrationName -- -d src/config/data-source.ts",
+      "migration:generate": "npm run typeorm migration:generate src/migration/generated -- -d src/config/data-source.ts",
+      "migration:run": "npm run typeorm migration:run -- -d src/config/data-source.ts",
+      "migration:revert": "npm run typeorm migration:revert -- -d src/config/data-source.ts",
+      "seed": "ts-node src/seed.ts"
+   },
+   "devDependencies": {
+      "@types/bcrypt": "^5.0.1",
+      "@types/express": "^4.17.21",
+      "@types/jsonwebtoken": "^9.0.4",
+      "@types/memory-cache": "^0.2.4",
+      "@types/node": "^16.11.10",
+      "concurrently": "^9.1.2",
+      "nodemon": "^3.1.8",
+      "ts-node": "10.7.0",
+      "typescript": "4.5.2"
+   },
+   "dependencies": {
+      "@types/cors": "^2.8.15",
+      "bcrypt": "^5.1.1",
+      "class-transformer": "^0.5.1",
+      "class-validator": "^0.14.1",
+      "dotenv": "^16.3.1",
+      "express": "^4.21.2",
+      "jsonwebtoken": "^9.0.2",
+      "memory-cache": "^0.2.0",
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.13",
+      "swagger-jsdoc": "^6.2.8",
+      "swagger-ui-express": "^5.0.1",
+      "typeorm": "0.3.17"
+   }
+}
