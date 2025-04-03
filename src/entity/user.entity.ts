@@ -1,5 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable} from "typeorm";
 import { ATimestamp } from "./abstract/timestamp";
+import {ClassSession} from "./ClassSession.entity";
+import {Programme} from "./Programme.entity";
+import {Subject} from "./Subject.entity";
+import {Emargement} from "./Emargement.entity";
 
 export enum RoleEnum {
   USER = 'USER',
@@ -29,4 +33,18 @@ export class User extends ATimestamp {
 
   @Column({ enum: RoleEnum, default: RoleEnum.USER })
   role: RoleEnum;
+
+  @OneToMany(() => ClassSession, (session) => session.classRepresentative)
+  classSessions: ClassSession[];
+
+  @ManyToOne(() => Programme, (programme) => programme.students)
+  programme: Programme;
+
+  // Un professeur peut enseigner plusieurs matières
+  @ManyToMany(() => Subject)
+  @JoinTable()
+  subjects: Subject[];
+
+  @OneToMany(() => Emargement, (emargement) => emargement.professor)
+  emargements: Emargement[];
 }
