@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Universite } from "./Universite.entity";
+import { ATimestamp } from "./abstract/timestamp";
 
 @Entity()
-export class Organisation {
+export class Organisation extends ATimestamp {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 

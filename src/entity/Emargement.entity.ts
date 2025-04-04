@@ -1,9 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from "typeorm";
 import { ClassSession } from "./ClassSession.entity";
 import {User} from "./User.entity";
+import { ATimestamp } from "./abstract/timestamp";
 
 @Entity()
-export class Emargement {
+export class Emargement extends ATimestamp {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 

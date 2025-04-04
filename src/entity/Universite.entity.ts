@@ -2,9 +2,10 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn
 import { Departement } from "./Departement.entity";
 import { Organisation } from "./Organisation.entity";
 import {User} from "./User.entity";
+import { ATimestamp } from "./abstract/timestamp";
 
 @Entity()
-export class Universite {
+export class Universite extends ATimestamp {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 

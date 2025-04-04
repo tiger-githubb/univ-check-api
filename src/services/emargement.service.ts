@@ -12,13 +12,13 @@ export class EmargementService {
     async getEmargementById(id: string): Promise<Emargement | null> {
         return await this.emargementRepository.findOne({
             where: { id },
-            relations: ["classSession", "professor"]
+            relations: { classSession: true, professor: true}
         });
     }
 
     async getAllEmargements(): Promise<Emargement[]> {
         return await this.emargementRepository.find({
-            relations: ["classSession", "professor"]
+            relations: { classSession: true, professor: true}
         });
     }
 

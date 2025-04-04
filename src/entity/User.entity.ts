@@ -10,7 +10,7 @@ import {
 import { ATimestamp } from "./abstract/timestamp";
 import { ClassSession } from "./ClassSession.entity";
 import { Programme } from "./Programme.entity";
-import { Subject } from "./Subject.entity";
+import { Course } from "./Course.entity";
 import { Emargement } from "./Emargement.entity";
 
 export enum RoleEnum {
@@ -49,9 +49,9 @@ export class User extends ATimestamp {
   programme: Programme;
 
   // Un professeur peut enseigner plusieurs matières
-  @ManyToMany(() => Subject)
+  @ManyToMany(() => Course)
   @JoinTable()
-  subjects: Subject[];
+  courses: Course[];
 
   @OneToMany(() => Emargement, (emargement) => emargement.professor)
   emargements: Emargement[];

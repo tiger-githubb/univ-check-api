@@ -19,7 +19,7 @@ export class CreateClassSessionDto {
 
     @IsNotEmpty()
     @IsString()
-    subjectId: string; // ID de la matière
+    courseId: string; // ID de la matière
 
     @IsNotEmpty()
     @IsString()
