@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class CreateUniversiteDto {
     @IsNotEmpty()
     @IsString()
-    nom: string;
+    name: string;
 
     // On attend l'id de l'organisation à laquelle l'université appartient
     @IsNotEmpty()
@@ -13,5 +13,5 @@ export class CreateUniversiteDto {
     // L'ID de l'utilisateur qui est le responsable de l'université
     @IsNotEmpty()
     @IsString()
-    responsableUniversiteId: string;
+    responsableId: string;
 }

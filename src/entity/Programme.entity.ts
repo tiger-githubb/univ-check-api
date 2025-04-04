@@ -10,9 +10,9 @@ export class Programme extends ATimestamp {
     id: string;
 
     @Column()
-    nom: string;
+    name: string;
 
-    @ManyToOne(() => Departement, (departement) => departement.programmes)
+    @ManyToOne(() => Departement, (departement) => departement.programs)
     departement: Departement;
 
     @OneToMany(() => Course, (course) => course.programme)

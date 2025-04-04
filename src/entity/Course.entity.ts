@@ -9,7 +9,7 @@ export class Course extends ATimestamp {
     id: string;
 
     @Column()
-    nom: string;
+    name: string;
 
     @Column("int")
     volumeHoraire: number;

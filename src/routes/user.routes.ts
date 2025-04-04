@@ -28,7 +28,7 @@ userRouter.get('/', authentification, authorization([RoleEnum.ADMIN]), getAllUse
 userRouter.get('/email/:email', authentification, getUserByEmail);
 userRouter.get('/:id', authentification, getUserById);
 userRouter.put('/:id', authentification, authorization([RoleEnum.ADMIN, RoleEnum.USER]),updateUser);
-userRouter.delete('/:id', deleteUser);
+userRouter.delete('/:id', authentification, deleteUser);
 
 export default userRouter;
 

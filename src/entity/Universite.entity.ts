@@ -10,15 +10,15 @@ export class Universite extends ATimestamp {
     id: string;
 
     @Column()
-    nom: string;
+    name: string;
 
     @ManyToOne(() => Organisation, (organisation) => organisation.universites)
     organisation: Organisation;
 
-    @OneToMany(() => Departement, (departement) => departement.universite)
+    @OneToMany(() => Departement, (departement) => departement.university)
     departements: Departement[];
 
     @OneToOne(() => User, { cascade: true })
     @JoinColumn()
-    responsableUniversite: User;
+    responsable: User;
 }

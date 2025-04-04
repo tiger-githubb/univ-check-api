@@ -8,7 +8,7 @@ export class Organisation extends ATimestamp {
     id: string;
 
     @Column()
-    nom: string;
+    name: string;
 
     @OneToMany(() => Universite, (universite) => universite.organisation)
     universites: Universite[];

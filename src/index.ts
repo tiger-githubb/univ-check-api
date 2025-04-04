@@ -33,19 +33,19 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 // Middlewares
-//app.use(cors());
+//app.use(cors()); 
 app.use(express.json());
 
 // Routes avec préfixe '/api'
 app.use(`${globalPath}/auth`, authRouter);
 app.use(`${globalPath}/users`, userRouter);
-app.use(`${globalPath}/organisations`, organisationRouter);
-app.use(`${globalPath}/universites`, universiteRouter);
-app.use(`${globalPath}/departements`, departementRouter);
-app.use(`${globalPath}/programmes`, programmeRouter);
-app.use(`${globalPath}/academicYears`, academicYearRouter);
-app.use(`${globalPath}/subjects`, courseRouter);
-app.use(`${globalPath}/classSessions`, classSessionRouter);
+app.use(`${globalPath}/organizations`, organisationRouter);
+app.use(`${globalPath}/universities`, universiteRouter);
+app.use(`${globalPath}/departments`, departementRouter);
+app.use(`${globalPath}/programs`, programmeRouter);
+app.use(`${globalPath}/academic-years`, academicYearRouter);
+app.use(`${globalPath}/courses`, courseRouter);
+app.use(`${globalPath}/class-sessions`, classSessionRouter);
 app.use(`${globalPath}/emargements`, emargementRouter);
 app.use(`${globalPath}/notifications`, notificationRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));

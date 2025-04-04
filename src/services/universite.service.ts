@@ -12,13 +12,13 @@ export class UniversiteService {
     async getUniversiteById(id: string): Promise<Universite | null> {
         return await this.universiteRepository.findOne({
             where: { id },
-            relations: { departements: true, responsableUniversite: true}
+            relations: { departements: true, responsable: true}
         });
     }
 
     async getAllUniversites(): Promise<Universite[]> {
         return await this.universiteRepository.find({
-            relations: { departements: true, responsableUniversite: true}
+            relations: { departements: true, responsable: true}
         });
     }
 
