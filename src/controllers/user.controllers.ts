@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import * as cache from "memory-cache";
 import { UserService } from "../services/user.service";
 import { CreateUserDto } from "../dto/user.dto";
-import {User} from "../entity/User.entity";
 import { UserFactory } from "../factory/user.factory";
 
 const userService = new UserService();
@@ -15,7 +14,7 @@ export const createUser = async (req: Request, res: Response) => {
     if (existingUser) {
       return res.status(409).json({ message: "Email already exists!" });
     }
-    const userData: Partial<User> = {
+    const userData: CreateUserDto = {
       name: data.name,
       email: data.email,
       phone: data.phone,

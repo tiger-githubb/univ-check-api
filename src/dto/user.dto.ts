@@ -29,12 +29,11 @@ export class CreateUserDto {
   // Pour un étudiant, l'id du programme auquel il est inscrit (optionnel)
   programmeId?: string;
 }
+
 export type Payload = {
   id?: string;
   email: string;
 };
-
-
 
 export class LoginDto {
   @IsNotEmpty()

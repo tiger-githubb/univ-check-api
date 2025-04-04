@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class CreateCourseDto {
     @IsNotEmpty()
@@ -12,5 +12,6 @@ export class CreateCourseDto {
     // On attend l'id du programme auquel la matière appartient
     @IsNotEmpty()
     @IsString()
+    @IsUUID()
     programmeId: string;
 }
