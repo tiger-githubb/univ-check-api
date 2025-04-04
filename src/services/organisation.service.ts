@@ -12,12 +12,12 @@ export class OrganisationService {
     async getOrganisationById(id: string): Promise<Organisation | null> {
         return await this.organisationRepository.findOne({
             where: { id },
-            relations: ["universites"]
+            relations: { universites: true }
         });
     }
 
     async getAllOrganisations(): Promise<Organisation[]> {
-        return await this.organisationRepository.find({ relations: ["universites"] });
+        return await this.organisationRepository.find({ relations: { universites: true } });
     }
 
     async updateOrganisation(id: string, data: Partial<Organisation>): Promise<Organisation | null> {

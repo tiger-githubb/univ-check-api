@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class CreateClassSessionDto {
     @IsNotEmpty()
@@ -15,17 +15,21 @@ export class CreateClassSessionDto {
 
     @IsNotEmpty()
     @IsString()
+    @IsUUID()
     academicYearId: string; // ID de l'année académique
 
     @IsNotEmpty()
     @IsString()
-    subjectId: string; // ID de la matière
+    @IsUUID()
+    courseId: string; // ID de la matière
 
     @IsNotEmpty()
     @IsString()
+    @IsUUID()
     professorId: string; // ID du professeur
 
     @IsNotEmpty()
     @IsString()
+    @IsUUID()
     classRepresentativeId: string; // ID du responsable de la session
 }

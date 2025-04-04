@@ -1,16 +1,16 @@
-import "reflect-metadata"
-import { DataSource } from "typeorm"
+import "reflect-metadata";
+import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
-import {AcademicYear} from "../entity/AcademicYear.entity";
-import {Organisation} from "../entity/Organisation.entity";
-import {Universite} from "../entity/Universite.entity";
-import {Departement} from "../entity/Departement.entity";
-import {Programme} from "../entity/Programme.entity";
-import {ClassSession} from "../entity/ClassSession.entity";
-import {Subject} from "../entity/Subject.entity";
-import {Emargement} from "../entity/Emargement.entity";
-import {Notification} from "../entity/Notification.entity";
-import { User } from "../entity/User.entity"
+import { AcademicYear } from "../entity/AcademicYear.entity";
+import { Organisation } from "../entity/Organisation.entity";
+import { Universite } from "../entity/Universite.entity";
+import { Departement } from "../entity/Departement.entity";
+import { Programme } from "../entity/Programme.entity";
+import { ClassSession } from "../entity/ClassSession.entity";
+import { Course } from "../entity/Course.entity";
+import { Emargement } from "../entity/Emargement.entity";
+import { Notification } from "../entity/Notification.entity";
+import { User } from "../entity/User.entity";
 
 dotenv.config();
 
@@ -26,7 +26,18 @@ export const AppDataSource = new DataSource({
   database: DB_DATABASE,
   synchronize: NODE_ENV === "dev" ? true : false,
   logging: NODE_ENV === "dev" ? false : false,
-  entities: [Organisation, Universite,Departement,Programme,AcademicYear, ClassSession, Subject,Emargement, Notification, User],
+  entities: [
+    Organisation,
+    Universite,
+    Departement,
+    Programme,
+    AcademicYear,
+    ClassSession,
+    Course,
+    Emargement,
+    Notification,
+    User,
+  ],
   migrations: ["src/migration/*.ts"],
   subscribers: [],
 });
