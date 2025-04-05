@@ -1,7 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { ATimestamp } from "./abstract/timestamp";
 
 @Entity()
-export class AcademicYear {
+export class AcademicYear extends ATimestamp {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 

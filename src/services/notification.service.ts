@@ -12,13 +12,13 @@ export class NotificationService {
     async getNotificationById(id: string): Promise<Notification | null> {
         return await this.notificationRepository.findOne({
             where: { id },
-            relations: ["emargement", "recipient"]
+            relations: { emargement: true, recipient: true}
         });
     }
 
     async getAllNotifications(): Promise<Notification[]> {
         return await this.notificationRepository.find({
-            relations: ["emargement", "recipient"]
+            relations: { emargement: true, recipient: true}
         });
     }
 
