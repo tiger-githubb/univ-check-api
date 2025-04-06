@@ -1,11 +1,11 @@
 import {connectDB} from "./config/data-source";
-import express, { Request, Response } from "express";
+const express = require("express");
 import * as dotenv from "dotenv";
 import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
 import { authRouter } from "./routes/auth.routes";
-import * as swaggerJSDoc from "swagger-jsdoc";
-import * as swaggerUi from "swagger-ui-express";
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 import * as fs from "fs";
 
 // Importer les routes
@@ -24,10 +24,16 @@ dotenv.config();
 const app = express();
 const globalPath = '/api/v1';
 
+const swaggerDocument = JSON.parse(fs.readFileSync("./swagger.json", "utf8"));
+const swaggerOptions = {
+    definition: swaggerDocument,
+    apis: ["./src/routes/*.ts"], // ajouter des routes documentées ici
+};
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+
 // Middlewares
 //app.use(cors());
 app.use(express.json());
-
 
 // Routes avec préfixe '/api'
 app.use(`${globalPath}/auth`, authRouter);
@@ -41,22 +47,18 @@ app.use(`${globalPath}/courses`, courseRouter);
 app.use(`${globalPath}/class-sessions`, classSessionRouter);
 app.use(`${globalPath}/emargements`, emargementRouter);
 app.use(`${globalPath}/notifications`, notificationRouter);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(
-    swaggerJSDoc({
-        definition: JSON.parse(fs.readFileSync("./swagger.json", "utf8")),
-        apis: ["./src/routes/*.ts"],
-    })
-));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// erreur custom
-app.use(errorHandler);
+const PORT = process.env.PORT || 3000;
 
-// catch‑all (optionnel, renvoie 404)
-app.use("*", (req: Request, res: Response) => {
-    res.status(404).json({ message: "Not Found" });
+connectDB().then(() => {
+    app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`));
+}).catch((error) => {
+    console.error("Database connection error:", error);
 });
 
-// connexion DB (ne pas écouter ici !)
-connectDB().catch(console.error);
+app.use(errorHandler);
 
-export default app;
+app.get("*", (req: Request, res: Response) => {
+    res.status(505).json({ message: "Bad Request" });
+});
