@@ -1,4 +1,4 @@
-import "reflect-metadata";
+import "reflect-metadata"
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
 import { AcademicYear } from "../entity/AcademicYear.entity";
@@ -12,20 +12,17 @@ import { Emargement } from "../entity/Emargement.entity";
 import { Notification } from "../entity/Notification.entity";
 import { User } from "../entity/User.entity";
 
-dotenv.config();
+dotenv.config()
 
-const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, NODE_ENV } =
-  process.env;
+const isDev = process.env.NODE_ENV === "dev"
+
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: DB_HOST,
-  port: parseInt(DB_PORT || "5432"),
-  username: DB_USERNAME,
-  password: DB_PASSWORD,
-  database: DB_DATABASE,
-  synchronize: NODE_ENV === "dev" ? true : false,
-  logging: NODE_ENV === "dev" ? false : false,
+  url: process.env.DATABASE_URL || process.env.POSTGRES_URL,
+  synchronize: isDev,
+  logging: isDev,
+  ssl: !isDev ? { rejectUnauthorized: false } : false, // important pour Neon
   entities: [
     Organisation,
     Universite,
@@ -38,7 +35,7 @@ export const AppDataSource = new DataSource({
     Notification,
     User,
   ],
-  migrations: ["src/migration/*.ts"],
+  migrations: [__dirname + "/migration/*.ts"],
   subscribers: [],
 });
 
