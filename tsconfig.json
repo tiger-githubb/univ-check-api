@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2020",                        // plus cohérent avec tes libs
+    "target": "ES6",                        // plus cohérent avec tes libs
     "module": "commonjs",
     "moduleResolution": "node",
-    "lib": ["ES2020"],                         // plus besoin d’ES5/ES6 séparés
+    "lib": ["es5",
+      "es6",
+      "ES2020"],                         // plus besoin d’ES5/ES6 séparés
     "rootDir": "./src",
     "outDir": "./build",
     "emitDecoratorMetadata": true,
