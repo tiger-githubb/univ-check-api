@@ -1,5 +1,6 @@
 import {connectDB} from "./config/data-source";
 const express = require("express");
+import { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
