@@ -5,8 +5,5 @@
   ],
   "routes": [
     { "src": "/(.*)", "dest": "build/index.js" }
-  ],
-  "installCommand": "npm install",
-  "buildCommand": "npm run vercel-build",
-  "devCommand": "npm run dev"
+  ]
 }
