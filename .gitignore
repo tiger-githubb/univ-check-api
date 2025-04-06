@@ -1,9 +1,24 @@
-.idea/
-.vscode/
+# Node
 node_modules/
+npm-debug.log*
+
+# Build output
 build/
-tmp/
-temp/
 
 # Env
 .env
+.env.*.local
+
+# Vercel
+.vercel/
+
+# Logs
+logs/
+*.log
+
+# MacOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

@@ -49,8 +49,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(
     })
 ));
 
-const PORT = process.env.PORT || 3000;
-
 // erreur custom
 app.use(errorHandler);
 
