@@ -22,7 +22,7 @@ async function seedDefaultUser() {
     if (existingUser) {
         console.log("Utilisateur par défaut déjà présent.");
     } else {
-        const userData: Partial<User> = {
+        const userData: CreateUserDto = {
             name: defaultUser.name,
             email: defaultUser.email,
             phone: defaultUser.phone,
