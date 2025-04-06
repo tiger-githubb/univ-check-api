@@ -8,6 +8,5 @@
   ],
   "installCommand": "npm install",
   "buildCommand": "npm run vercel-build",
-  "devCommand": "npm run dev",
-  "startCommand": "npm run start"
+  "devCommand": "npm run dev"
 }
