@@ -6,14 +6,13 @@ import {
     updateDepartement,
     deleteDepartement
 } from '../controllers/departement.controller';
-import { authentification } from '../middleware/authentification';
 
 const departementRouter = Router();
 
-departementRouter.post('/', authentification, createDepartement);
+departementRouter.post('/', createDepartement);
 departementRouter.get('/', getAllDepartements);
 departementRouter.get('/:id', getDepartementById);
-departementRouter.put('/:id', authentification, updateDepartement);
-departementRouter.delete('/:id', authentification, deleteDepartement);
+departementRouter.put('/:id', updateDepartement);
+departementRouter.delete('/:id', deleteDepartement);
 
 export default departementRouter;

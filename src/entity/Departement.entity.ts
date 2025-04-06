@@ -1,19 +1,18 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
 import { Universite } from "./Universite.entity";
 import { Programme } from "./Programme.entity";
-import { ATimestamp } from "./abstract/timestamp";
 
 @Entity()
-export class Departement extends ATimestamp {
+export class Departement {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
     @Column()
-    name: string;
+    nom: string;
 
     @ManyToOne(() => Universite, (universite) => universite.departements)
-    university: Universite;
+    universite: Universite;
 
     @OneToMany(() => Programme, (programme) => programme.departement)
-    programs: Programme[];
+    programmes: Programme[];
 }

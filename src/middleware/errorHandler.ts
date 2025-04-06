@@ -15,8 +15,6 @@ export const errorHandler = (
   const message = err.message || "Internal server error";
   const data = err.data;
 
-  console.log('ERROR ============== HTTP')
-
   console.error(`Error ${statusCode}: ${message}`, err); // Journalisation plus détaillée
 
   res.status(statusCode).json({

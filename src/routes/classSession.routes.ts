@@ -6,14 +6,13 @@ import {
     updateClassSession,
     deleteClassSession
 } from '../controllers/classSession.controller';
-import { authentification } from '../middleware/authentification';
 
 const classSessionRouter = Router();
 
-classSessionRouter.post('/', authentification, createClassSession);
+classSessionRouter.post('/', createClassSession);
 classSessionRouter.get('/', getAllClassSessions);
-classSessionRouter.get('/:id', authentification, getClassSessionById);
-classSessionRouter.put('/:id', authentification, updateClassSession);
-classSessionRouter.delete('/:id', authentification, deleteClassSession);
+classSessionRouter.get('/:id', getClassSessionById);
+classSessionRouter.put('/:id', updateClassSession);
+classSessionRouter.delete('/:id', deleteClassSession);
 
 export default classSessionRouter;

@@ -12,13 +12,13 @@ export class ClassSessionService {
     async getClassSessionById(id: string): Promise<ClassSession | null> {
         return await this.sessionRepository.findOne({
             where: { id },
-            relations: {academicYear: true, course: true, professor: true, classRepresentative: true}
+            relations: ["academicYear", "subject", "professor", "classRepresentative"]
         });
     }
 
     async getAllClassSessions(): Promise<ClassSession[]> {
         return await this.sessionRepository.find({
-            relations: {academicYear: true, course: true, professor: true, classRepresentative: true}
+            relations: ["academicYear", "subject", "professor", "classRepresentative"]
         });
     }
 

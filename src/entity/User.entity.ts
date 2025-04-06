@@ -1,24 +1,16 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  ManyToOne,
-  ManyToMany,
-  JoinTable,
-} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable} from "typeorm";
 import { ATimestamp } from "./abstract/timestamp";
-import { ClassSession } from "./ClassSession.entity";
-import { Programme } from "./Programme.entity";
-import { Course } from "./Course.entity";
-import { Emargement } from "./Emargement.entity";
+import {ClassSession} from "./ClassSession.entity";
+import {Programme} from "./Programme.entity";
+import {Subject} from "./Subject.entity";
+import {Emargement} from "./Emargement.entity";
 
 export enum RoleEnum {
-  USER = "USER",
-  ADMIN = "ADMIN",
-  TEACHER = "TEACHER",
-  SUPERVISOR = "SUPERVISOR",
-  DELEGATE = "DELEGATE",
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+  TEACHER = 'TEACHER',
+  SUPERVISOR = 'SUPERVISOR',
+  DELEGATE = 'DELEGATE',
 }
 
 @Entity("users")
@@ -49,9 +41,9 @@ export class User extends ATimestamp {
   programme: Programme;
 
   // Un professeur peut enseigner plusieurs matières
-  @ManyToMany(() => Course)
+  @ManyToMany(() => Subject)
   @JoinTable()
-  courses: Course[];
+  subjects: Subject[];
 
   @OneToMany(() => Emargement, (emargement) => emargement.professor)
   emargements: Emargement[];

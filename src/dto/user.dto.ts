@@ -24,16 +24,17 @@ export class CreateUserDto {
   role: RoleEnum;
 
   // Pour un enseignant, liste des sujets enseignés (optionnel)
-  courses?: string[];
+  subjects?: string[];
 
   // Pour un étudiant, l'id du programme auquel il est inscrit (optionnel)
   programmeId?: string;
 }
-
 export type Payload = {
   id?: string;
   email: string;
 };
+
+
 
 export class LoginDto {
   @IsNotEmpty()
