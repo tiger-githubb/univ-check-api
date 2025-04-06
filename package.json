@@ -5,9 +5,9 @@
    "type": "commonjs",
    "scripts": {
       "watch": "tsc -w",
-      "dev": "nodemon build/index.js",
       "build": "tsc",
       "vercel-build": "npm run build",
+      "dev": "ts-node src/index.ts",
       "start": "node build/index.js",
       "typeorm": "typeorm-ts-node-commonjs",
       "migration:create": "typeorm migration:create src/migration/MigrationName -- -d src/config/data-source.ts",
