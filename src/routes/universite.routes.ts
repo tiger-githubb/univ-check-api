@@ -6,16 +6,13 @@ import {
     updateUniversite,
     deleteUniversite
 } from '../controllers/universite.controller';
-import { authentification } from '../middleware/authentification';
-import { RoleEnum } from '../entity/User.entity';
-import { authorization } from '../middleware/authorization';
 
 const universiteRouter = Router();
 
-universiteRouter.post('/', authentification, authorization([RoleEnum.ADMIN, RoleEnum.SUPERVISOR]), createUniversite);
+universiteRouter.post('/', createUniversite);
 universiteRouter.get('/', getAllUniversites);
 universiteRouter.get('/:id', getUniversiteById);
-universiteRouter.put('/:id', authentification, authorization([RoleEnum.ADMIN, RoleEnum.SUPERVISOR]), updateUniversite);
-universiteRouter.delete('/:id', authentification, deleteUniversite);
+universiteRouter.put('/:id', updateUniversite);
+universiteRouter.delete('/:id', deleteUniversite);
 
 export default universiteRouter;

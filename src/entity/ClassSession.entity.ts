@@ -1,11 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { AcademicYear } from "./AcademicYear.entity";
-import { Course } from "./Course.entity";
+import { Subject } from "./Subject.entity";
 import {User} from "./User.entity";
-import { ATimestamp } from "./abstract/timestamp";
 
 @Entity()
-export class ClassSession extends ATimestamp {
+export class ClassSession {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
@@ -21,8 +20,8 @@ export class ClassSession extends ATimestamp {
     @ManyToOne(() => AcademicYear)
     academicYear: AcademicYear;
 
-    @ManyToOne(() => Course, (course) => course.classSessions)
-    course: Course;
+    @ManyToOne(() => Subject, (subject) => subject.classSessions)
+    subject: Subject;
 
     @ManyToOne(() => User, (professor) => professor.classSessions)
     professor: User;
@@ -30,5 +29,3 @@ export class ClassSession extends ATimestamp {
     @ManyToOne(() => User, (rep) => rep.classSessions)
     classRepresentative: User;
 }
-
-export type IClassSession = ClassSession;

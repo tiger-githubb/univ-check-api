@@ -4,18 +4,15 @@ import {
     getEmargementById,
     getAllEmargements,
     updateEmargement,
-    deleteEmargement,
-    setEmargementState
+    deleteEmargement
 } from '../controllers/emargement.controller';
-import { authentification } from '../middleware/authentification';
 
 const emargementRouter = Router();
 
-emargementRouter.post('/', authentification, createEmargement);
-emargementRouter.get('/', authentification, getAllEmargements);
-emargementRouter.get('/:id', authentification, getEmargementById);
-emargementRouter.patch('/status/:id/:status', authentification, setEmargementState);
-emargementRouter.put('/:id', authentification, updateEmargement);
-emargementRouter.delete('/:id', authentification, deleteEmargement);
+emargementRouter.post('/', createEmargement);
+emargementRouter.get('/', getAllEmargements);
+emargementRouter.get('/:id', getEmargementById);
+emargementRouter.put('/:id', updateEmargement);
+emargementRouter.delete('/:id', deleteEmargement);
 
 export default emargementRouter;
