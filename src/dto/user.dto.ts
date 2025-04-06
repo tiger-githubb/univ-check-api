@@ -24,7 +24,7 @@ export class CreateUserDto {
   role: RoleEnum;
 
   // Pour un enseignant, liste des sujets enseignés (optionnel)
-  subjects?: string[];
+  courses?: string[];
 
   // Pour un étudiant, l'id du programme auquel il est inscrit (optionnel)
   programmeId?: string;
@@ -35,8 +35,6 @@ export type Payload = {
   email: string;
 };
 
-
-
 export class LoginDto {
   @IsNotEmpty()
   @IsEmail()
@@ -46,3 +44,4 @@ export class LoginDto {
   @IsString()
   password: string;
 }
+

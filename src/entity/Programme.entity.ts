@@ -1,21 +1,22 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
 import { Departement } from "./Departement.entity";
-import { Subject } from "./Subject.entity";
+import { Course } from "./Course.entity";
 import {User} from "./User.entity";
+import { ATimestamp } from "./abstract/timestamp";
 
 @Entity()
-export class Programme {
+export class Programme extends ATimestamp {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
     @Column()
-    nom: string;
+    name: string;
 
-    @ManyToOne(() => Departement, (departement) => departement.programmes)
+    @ManyToOne(() => Departement, (departement) => departement.programs)
     departement: Departement;
 
-    @OneToMany(() => Subject, (subject) => subject.programme)
-    subjects: Subject[];
+    @OneToMany(() => Course, (course) => course.programme)
+    courses: Course[];
 
     // Si besoin, association inverse avec Student
     @OneToMany(() => User, (student) => student.programme)

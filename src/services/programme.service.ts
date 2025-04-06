@@ -12,12 +12,12 @@ export class ProgrammeService {
     async getProgrammeById(id: string): Promise<Programme | null> {
         return await this.programmeRepository.findOne({
             where: { id },
-            relations: ["subjects"]
+            relations: {courses: true}
         });
     }
 
     async getAllProgrammes(): Promise<Programme[]> {
-        return await this.programmeRepository.find({ relations: ["subjects"] });
+        return await this.programmeRepository.find({ relations: {courses: true} });
     }
 
     async updateProgramme(id: string, data: Partial<Programme>): Promise<Programme | null> {

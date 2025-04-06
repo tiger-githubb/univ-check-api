@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { EmargementService } from "../services/emargement.service";
+import { EmargementStatus } from "../entity/Emargement.entity";
 
 const emargementService = new EmargementService();
 
@@ -38,6 +39,16 @@ export const updateEmargement = async (req: Request, res: Response) => {
         res.json(emargement);
     } catch (error) {
         res.status(500).json({ message: "Erreur lors de la mise à jour de l'émargement", error });
+    }
+};
+
+export const setEmargementState = async (req: Request, res: Response) => {
+    try {
+        const emargement = await emargementService.setStatus(req.params.id, req.params.status as EmargementStatus);
+        if (!emargement) return res.status(404).json({ message: "Émargement non trouvé" });
+        res.json(emargement);
+    } catch (error) {
+        res.status(500).json({ message: "Erreur lors de la mise à jour de l'état de l'émargement", error });
     }
 };
 
