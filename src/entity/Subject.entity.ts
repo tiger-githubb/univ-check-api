@@ -12,10 +12,4 @@ export class Subject {
 
     @Column("int")
     volumeHoraire: number;
-
-    @ManyToOne(() => Programme, (programme) => programme.subjects)
-    programme: Programme;
-
-    @OneToMany(() => ClassSession, (session) => session.subject)
-    classSessions: ClassSession[];
 }
