@@ -10,10 +10,18 @@ import {
     getUserById,
     updateUser
 } from '../controllers/user.controllers';
+import { validateDto } from "../middleware/validation";
+import { CreateUserDto } from "../dto/user.dto";
 
 const userRouter = Router();
 
-userRouter.post('/', authentification,createUser);
+userRouter.post(
+    '/', 
+    validateDto(CreateUserDto), 
+    authentification, 
+    authorization([RoleEnum.ADMIN, RoleEnum.SUPERVISOR]), 
+    createUser
+);
 /**
  * @swagger
  * /users:
@@ -27,7 +35,8 @@ userRouter.post('/', authentification,createUser);
 userRouter.get('/', authentification, authorization([RoleEnum.ADMIN]), getAllUsers);
 userRouter.get('/email/:email', authentification, getUserByEmail);
 userRouter.get('/:id', authentification, getUserById);
-userRouter.put('/:id', authentification, authorization([RoleEnum.ADMIN, RoleEnum.USER]),updateUser);
-userRouter.delete('/:id', deleteUser);
+userRouter.put('/:id', authentification, authorization([RoleEnum.ADMIN, RoleEnum.USER]), updateUser);
+userRouter.delete('/:id', authentification, deleteUser);
 
 export default userRouter;
+

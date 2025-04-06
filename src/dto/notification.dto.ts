@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { NotificationStatus } from '../entity/Notification.entity';
 
 export class CreateNotificationDto {
     // Id de l'émargement qui déclenche la notification
@@ -12,8 +13,9 @@ export class CreateNotificationDto {
 
     // Status initial de la notification (par exemple "Envoyée")
     @IsNotEmpty()
+    @IsEnum(NotificationStatus)
     @IsString()
-    status: "Envoyée" | "Confirmée";
+    status: NotificationStatus;
 
     // Id du destinataire, généralement le responsable de l'université (User)
     @IsNotEmpty()

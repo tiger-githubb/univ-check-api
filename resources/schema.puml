@@ -2,14 +2,14 @@
 ' *************** Entités de la structure de l'organisation ***************
 
 class Organisation {
-  - nom : String
+  - name : String
   - universites : List<Universite>
 }
 
 class Universite {
-  - nom : String
+  - name : String
   - departements : List<Departement>
-  - responsableUniversite : User
+  - responsable : User
 }
 
 class User {
@@ -19,26 +19,27 @@ class User {
   - email : String
   - password : String
   - role : String "USER, ADMIN, TEACHER, DELEGATE, SUPERVISOR"
-  - subjects : List<Subject>
+  - subjects : List<Course>
   - programme : Programme
 }
 
 class Departement {
-  - nom : String
-  - programmes : List<Programme>
+  - name : String
+  - programs : List<Programme>
 }
 
 class Programme {
-  - nom : String
-  - subjects : List<Subject>
+  - name : String
+  - subjects : List<Course>
 }
 
 class AcademicYear {
   - periode : String  "ex: 2024-2025"
 }
 
-class Subject {
-  - nom : String
+' **** Cours ou Matière ****
+class Course {
+  - name : String
   - volumeHoraire : int
 }
 
@@ -49,7 +50,7 @@ class ClassSession {
   - heureDebut : Time
   - heureFin : Time
   - academicYear : AcademicYear
-  - subject : Subject
+  - subject : Course
   - professor : User
   - classRepresentative : User
 }
@@ -58,7 +59,7 @@ class ClassSession {
 
 class Emargement {
   - id : String
-  - timestamp : DateTime
+  - createdAt : DateTime
   - status : String  "En attente, Présent, Signalé absent"
   - classSession : ClassSession
   - professor : User
@@ -66,7 +67,7 @@ class Emargement {
 
 class Notification {
   - id : String
-  - timestamp : DateTime
+  - createdAt : DateTime
   - message : String
   - status : String  "Envoyée, Confirmée"
   - emargement : Emargement
@@ -78,11 +79,11 @@ class Notification {
 Organisation "1" -- "1..*" Universite : contient
 Universite "1" -- "1..*" Departement : comprend
 Departement "1" -- "1..*" Programme : offre
-Programme "1" -- "1..*" Subject : propose
+Programme "1" -- "1..*" Course : propose
 Universite "1" -- "1" User : gérée_par
 
 ClassSession "1" -- "1" AcademicYear : planifiée_dans
-ClassSession "1" -- "1" Subject : concerne
+ClassSession "1" -- "1" Course : concerne
 ClassSession "1" -- "1" User : donné_par
 ClassSession "1" -- "1" User : validée_par
 

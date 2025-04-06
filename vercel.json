@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "src/index.ts", "use": "@vercel/node" }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "src/index.ts"
+    }
+  ],
+  "installCommand": "npm install",
+  "buildCommand": "npm run vercel-build",
+  "devCommand": "npm run dev"
+}
