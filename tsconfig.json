@@ -1,27 +1,22 @@
 {
   "compilerOptions": {
-    "lib": [
-      "es5",
-      "es6",
-      "ES2020"
-    ],
-    "target": "ES6",
+    "target": "ES6",                        // plus cohérent avec tes libs
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./build",
+    "lib": ["es5",
+      "es6",
+      "ES2020"],                         // plus besoin d’ES5/ES6 séparés
     "rootDir": "./src",
+    "outDir": "./build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
+    "strict": true                             // active toutes les vérifications strictes
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "build"]
 }
