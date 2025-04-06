@@ -25,16 +25,10 @@ dotenv.config();
 const app = express();
 const globalPath = '/api/v1';
 
-const swaggerDocument = JSON.parse(fs.readFileSync("./swagger.json", "utf8"));
-const swaggerOptions = {
-    definition: swaggerDocument,
-    apis: ["./src/routes/*.ts"], // ajouter des routes documentées ici
-};
-const swaggerDocs = swaggerJSDoc(swaggerOptions);
-
 // Middlewares
-//app.use(cors()); 
+//app.use(cors());
 app.use(express.json());
+
 
 // Routes avec préfixe '/api'
 app.use(`${globalPath}/auth`, authRouter);
@@ -48,19 +42,24 @@ app.use(`${globalPath}/courses`, courseRouter);
 app.use(`${globalPath}/class-sessions`, classSessionRouter);
 app.use(`${globalPath}/emargements`, emargementRouter);
 app.use(`${globalPath}/notifications`, notificationRouter);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(
+    swaggerJSDoc({
+        definition: JSON.parse(fs.readFileSync("./swagger.json", "utf8")),
+        apis: ["./src/routes/*.ts"],
+    })
+));
 
 const PORT = process.env.PORT || 3000;
 
-connectDB().then(() => {
-    app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`));
-}).catch((error) => {
-    console.error("Database connection error:", error);
-});
-
+// erreur custom
 app.use(errorHandler);
 
-app.get("*", (req: Request, res: Response) => {
-  res.status(505).json({ message: "Bad Request" });
+// catch‑all (optionnel, renvoie 404)
+app.use("*", (req: Request, res: Response) => {
+    res.status(404).json({ message: "Not Found" });
 });
 
+// connexion DB (ne pas écouter ici !)
+connectDB().catch(console.error);
+
+export default app;
