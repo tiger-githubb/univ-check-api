@@ -5,10 +5,10 @@
    "type": "commonjs",
    "scripts": {
       "watch": "tsc -w",
-      "dev": "nodemon",
-      "start:dev": "concurrently \"tsc -w\" \"nodemon build/index.js\"",
+      "dev": "nodemon build/index.js",
       "build": "tsc",
-      "start": "ts-node src/index.ts",
+      "vercel-build": "npm run build",
+      "start": "node build/index.js",
       "typeorm": "typeorm-ts-node-commonjs",
       "migration:create": "typeorm migration:create src/migration/MigrationName -- -d src/config/data-source.ts",
       "migration:generate": "npm run typeorm migration:generate src/migration/generated -- -d src/config/data-source.ts",
