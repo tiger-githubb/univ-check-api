@@ -26,7 +26,7 @@ dotenv.config();
 const app = express();
 const globalPath = '/api/v1';
 
-const swaggrFilePath = path.join(__dirname, "swagger.json");
+const swaggrFilePath = path.join(__dirname, "../swagger.json");
 const swaggerDocument = JSON.parse(fs.readFileSync(swaggrFilePath, "utf8"));
 const swaggerOptions = {
     definition: swaggerDocument,
