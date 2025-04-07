@@ -11,15 +11,22 @@ import {Course} from "../entity/Course.entity";
 import {Emargement} from "../entity/Emargement.entity";
 import {Notification} from "../entity/Notification.entity";
 import {User} from "../entity/User.entity";
+import {parse} from "pg-connection-string";
 
 dotenv.config()
+
+const databaseURL = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+const config = parse(databaseURL);
 
 const isDev = process.env.NODE_ENV === "dev"
 
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    url: process.env.DATABASE_URL || process.env.POSTGRES_URL,
+    host: config.host,
+    username: config.user,
+    password: config.password,
+    database: config.database,
     synchronize: isDev,
     logging: isDev,
     ssl: {
