@@ -6,9 +6,7 @@
       "destination": "/api"
     }
   ],
-  "build": {
-    "env": {
-      "NPM_CONFIG_USER_AGENT": "npm/10.9.2 node/v22.13.1"
-    }
-  }
+  "installCommand": "npm install",
+  "buildCommand": "npm run vercel-build",
+  "devCommand": "npm run dev"
 }
