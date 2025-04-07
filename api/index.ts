@@ -8,6 +8,7 @@ import { authRouter } from "../src/routes/auth.routes";
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 import * as fs from "fs";
+import path from "path";
 
 // Importer les routes
 import organisationRouter from '../src/routes/organisation.routes';
@@ -25,7 +26,8 @@ dotenv.config();
 const app = express();
 const globalPath = '/api/v1';
 
-const swaggerDocument = JSON.parse(fs.readFileSync("/vercel/path0/swagger.json", "utf8"));
+const swaggrFilePath = path.join(__dirname, "swagger.json");
+const swaggerDocument = JSON.parse(fs.readFileSync(swaggrFilePath, "utf8"));
 const swaggerOptions = {
     definition: swaggerDocument,
     apis: ["./src/routes/*.ts"], // ajouter des routes documentées ici
