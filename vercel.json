@@ -6,6 +6,12 @@
       "destination": "/api"
     }
   ],
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
   "installCommand": "npm install",
   "buildCommand": "npm run vercel-build",
   "devCommand": "npm run dev"
