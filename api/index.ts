@@ -25,7 +25,7 @@ dotenv.config();
 const app = express();
 const globalPath = '/api/v1';
 
-const swaggerDocument = JSON.parse(fs.readFileSync("/api/swagger.json", "utf8"));
+const swaggerDocument = JSON.parse(fs.readFileSync("swagger.json", "utf8"));
 const swaggerOptions = {
     definition: swaggerDocument,
     apis: ["./src/routes/*.ts"], // ajouter des routes documentées ici
