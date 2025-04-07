@@ -26,7 +26,7 @@ dotenv.config();
 const app = express();
 const globalPath = '/api/v1';
 
-const swaggrFilePath = path.join(__dirname, "../swagger.json");
+const swaggrFilePath = path.join(__dirname, "../public/swagger.json");
 const swaggerDocument = JSON.parse(fs.readFileSync(swaggrFilePath, "utf8"));
 const swaggerOptions = {
     definition: swaggerDocument,
@@ -61,6 +61,7 @@ connectDB().then(() => {
 });
 
 app.use(errorHandler);
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.get("*", (req: Request, res: Response) => {
     res.status(505).json({ message: "Bad Request" });
