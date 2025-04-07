@@ -1,12 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "src/index.ts", "use": "@vercel/node" }
-  ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "src/index.ts"
+      "source": "/(.*)",
+      "destination": "/api"
     }
   ],
   "installCommand": "npm install",
