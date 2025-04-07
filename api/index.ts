@@ -1,26 +1,25 @@
-import {connectDB} from "./config/data-source";
-const serverless = require('serverless-http');
+import {connectDB} from "../src/config/data-source";
 const express = require("express");
 import { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import "reflect-metadata";
-import { errorHandler } from "./middleware/errorHandler";
-import { authRouter } from "./routes/auth.routes";
+import { errorHandler } from "../src/middleware/errorHandler";
+import { authRouter } from "../src/routes/auth.routes";
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 import * as fs from "fs";
 
 // Importer les routes
-import organisationRouter from './routes/organisation.routes';
-import universiteRouter from './routes/universite.routes';
-import departementRouter from './routes/departement.routes';
-import programmeRouter from './routes/programme.routes';
-import academicYearRouter from './routes/academicYear.routes';
-import courseRouter from './routes/course.routes';
-import classSessionRouter from './routes/classSession.routes';
-import userRouter from './routes/user.routes';
-import emargementRouter from './routes/emargement.routes';
-import notificationRouter from './routes/notification.routes';
+import organisationRouter from '../src/routes/organisation.routes';
+import universiteRouter from '../src/routes/universite.routes';
+import departementRouter from '../src/routes/departement.routes';
+import programmeRouter from '../src/routes/programme.routes';
+import academicYearRouter from '../src/routes/academicYear.routes';
+import courseRouter from '../src/routes/course.routes';
+import classSessionRouter from '../src/routes/classSession.routes';
+import userRouter from '../src/routes/user.routes';
+import emargementRouter from '../src/routes/emargement.routes';
+import notificationRouter from '../src/routes/notification.routes';
 
 dotenv.config();
 const app = express();
@@ -66,4 +65,4 @@ app.get("*", (req: Request, res: Response) => {
 });
 
 
-module.exports.handler = serverless(app);
+module.exports = app;
