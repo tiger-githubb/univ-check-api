@@ -1,4 +1,5 @@
 import {connectDB} from "./config/data-source";
+const serverless = require('serverless-http');
 const express = require("express");
 import { Request, Response } from "express";
 import * as dotenv from "dotenv";
@@ -63,3 +64,6 @@ app.use(errorHandler);
 app.get("*", (req: Request, res: Response) => {
     res.status(505).json({ message: "Bad Request" });
 });
+
+
+module.exports.handler = serverless(app);
