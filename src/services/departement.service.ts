@@ -21,12 +21,12 @@ export class DepartementService {
     async getDepartementById(id: string): Promise<Departement | null> {
         return await this.departementRepository.findOne({
             where: { id },
-            relations: {programs: true, university: true}
+            relations: {university: true}
         });
     }
 
     async getAllDepartements(order: 'asc' | 'desc' = 'desc'): Promise<Departement[]> {
-        return await this.departementRepository.find({ order: { updatedAt: order.toUpperCase() as 'ASC' | 'DESC' }, relations: {programs: true,} });
+        return await this.departementRepository.find({ order: { updatedAt: order.toUpperCase() as 'ASC' | 'DESC' } , relations: {university: true}});
     }
 
     async updateDepartement(id: string, data: Partial<CreateDepartementDto>): Promise<Departement | null> {

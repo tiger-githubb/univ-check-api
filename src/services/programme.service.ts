@@ -20,13 +20,12 @@ export class ProgrammeService {
 
     async getProgrammeById(id: string): Promise<Programme | null> {
         return await this.programmeRepository.findOne({
-            where: { id },
-            relations: {courses: true}
+            where: { id }
         });
     }
 
     async getAllProgrammes(order: 'asc' | 'desc' = 'desc'): Promise<Programme[]> {
-        return await this.programmeRepository.find({ order: { updatedAt: order.toUpperCase() as 'ASC' | 'DESC' }, relations: {courses: true} });
+        return await this.programmeRepository.find({ order: { updatedAt: order.toUpperCase() as 'ASC' | 'DESC' }, relations: {departement: true} });
     }
 
     async updateProgramme(id: string, data: Partial<CreateProgrammeDto>): Promise<Programme | null> {
