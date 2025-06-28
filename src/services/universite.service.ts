@@ -29,8 +29,9 @@ export class UniversiteService {
         });
     }
 
-    async getAllUniversites(): Promise<Universite[]> {
+    async getAllUniversites(order: 'asc' | 'desc' = 'desc'): Promise<Universite[]> {
         return await this.universiteRepository.find({
+            order: { updatedAt: order.toUpperCase() as 'ASC' | 'DESC' },
             relations: { organisation: true, departements: true, responsable: true }
         });
     }

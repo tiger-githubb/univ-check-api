@@ -24,7 +24,8 @@ export const getDepartementById = async (req: Request, res: Response) => {
 
 export const getAllDepartements = async (req: Request, res: Response) => {
     try {
-        const departements = await departementService.getAllDepartements();
+        const order = (req.query.order === 'asc' || req.query.order === 'desc') ? req.query.order : 'desc';
+        const departements = await departementService.getAllDepartements(order as 'asc' | 'desc');
         res.json(departements);
     } catch (error) {
         res.status(500).json({ message: "Erreur lors de la récupération des départements", error });

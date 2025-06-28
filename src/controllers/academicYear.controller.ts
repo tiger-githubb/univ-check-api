@@ -24,7 +24,8 @@ export const getAcademicYearById = async (req: Request, res: Response) => {
 
 export const getAllAcademicYears = async (req: Request, res: Response) => {
     try {
-        const academicYears = await academicYearService.getAllAcademicYears();
+        const order = (req.query.order === 'asc' || req.query.order === 'desc') ? req.query.order : 'desc';
+        const academicYears = await academicYearService.getAllAcademicYears(order as 'asc' | 'desc');
         res.json(academicYears);
     } catch (error) {
         res.status(500).json({ message: "Erreur lors de la récupération des années académiques", error });

@@ -24,7 +24,8 @@ export const getOrganisationById = async (req: Request, res: Response) => {
 
 export const getAllOrganisations = async (req: Request, res: Response) => {
     try {
-        const organisations = await organisationService.getAllOrganisations();
+        const order = (req.query.order === 'asc' || req.query.order === 'desc') ? req.query.order : 'desc';
+        const organisations = await organisationService.getAllOrganisations(order as 'asc' | 'desc');
         res.json(organisations);
     } catch (error) {
         res.status(500).json({ message: "Erreur lors de la récupération des organisations", error });

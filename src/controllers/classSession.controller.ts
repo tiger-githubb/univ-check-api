@@ -49,3 +49,20 @@ export const deleteClassSession = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Erreur lors de la suppression de la session de cours", error });
     }
 };
+
+export const getClassSessionsByTeacherAndPeriod = async (req: Request, res: Response) => {
+    try {
+        const { teacherId, week, day } = req.query;
+        if (!teacherId) {
+            return res.status(400).json({ message: "teacherId is required" });
+        }
+        const sessions = await classSessionService.getClassSessionsByTeacherAndPeriod(
+            teacherId as string,
+            week ? parseInt(week as string) : undefined,
+            day ? day as string : undefined
+        );
+        res.json(sessions);
+    } catch (error) {
+        res.status(500).json({ message: "Erreur lors de la récupération des sessions de cours du professeur", error });
+    }
+};

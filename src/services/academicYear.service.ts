@@ -14,8 +14,8 @@ export class AcademicYearService {
         return await this.academicYearRepository.findOne({ where: { id } });
     }
 
-    async getAllAcademicYears(): Promise<AcademicYear[]> {
-        return await this.academicYearRepository.find();
+    async getAllAcademicYears(order: 'asc' | 'desc' = 'desc'): Promise<AcademicYear[]> {
+        return await this.academicYearRepository.find({ order: { updatedAt: order.toUpperCase() as 'ASC' | 'DESC' } });
     }
 
     async updateAcademicYear(id: string, data: Partial<CreateAcademicYearDto>): Promise<AcademicYear | null> {

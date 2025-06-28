@@ -4,7 +4,8 @@ import {
     getClassSessionById,
     getAllClassSessions,
     updateClassSession,
-    deleteClassSession
+    deleteClassSession,
+    getClassSessionsByTeacherAndPeriod
 } from '../controllers/classSession.controller';
 import { authentification } from '../middleware/authentification';
 
@@ -15,5 +16,6 @@ classSessionRouter.get('/', getAllClassSessions);
 classSessionRouter.get('/:id', authentification, getClassSessionById);
 classSessionRouter.put('/:id', authentification, updateClassSession);
 classSessionRouter.delete('/:id', authentification, deleteClassSession);
+classSessionRouter.get('/by-teacher', authentification, getClassSessionsByTeacherAndPeriod);
 
 export default classSessionRouter;

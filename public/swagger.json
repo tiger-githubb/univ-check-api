@@ -786,12 +786,12 @@
         }
       }
     },
-    "/api/v1/departmens": {
+    "/api/v1/departments": {
       "get": {
         "tags": [
           "Départements"
         ],
-        "summary": "Get all departmens",
+        "summary": "Get all departments",
         "security": [
           {
             "bearerAuth": []
@@ -799,7 +799,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of departmens",
+            "description": "List of departments",
             "content": {
               "application/json": {
                 "schema": {
@@ -850,7 +850,7 @@
         }
       }
     },
-    "/api/v1/departmens/{id}": {
+    "/api/v1/departments/{id}": {
       "get": {
         "tags": [
           "Départements"

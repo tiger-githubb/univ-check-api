@@ -25,7 +25,8 @@ export const getUniversiteById = async (req: Request, res: Response) => {
 
 export const getAllUniversites = async (req: Request, res: Response) => {
     try {
-        const universites = await universiteService.getAllUniversites();
+        const order = (req.query.order === 'asc' || req.query.order === 'desc') ? req.query.order : 'desc';
+        const universites = await universiteService.getAllUniversites(order as 'asc' | 'desc');
         res.json(universites);
     } catch (error) {
         res.status(500).json({ message: "Erreur lors de la récupération des universités", error });

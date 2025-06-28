@@ -24,10 +24,11 @@ export const getCourseById = async (req: Request, res: Response) => {
 
 export const getAllCourses = async (req: Request, res: Response) => {
     try {
-        const courses = await courseService.getAllCourses();
+        const order = (req.query.order === 'asc' || req.query.order === 'desc') ? req.query.order : 'desc';
+        const courses = await courseService.getAllCourses(order as 'asc' | 'desc');
         res.json(courses);
     } catch (error) {
-        res.status(500).json({ message: "Erreur lors de la récupération des matières", error });
+        res.status(500).json({ message: "Erreur lors de la récupération des cours", error });
     }
 };
 

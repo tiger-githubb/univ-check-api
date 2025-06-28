@@ -60,3 +60,16 @@ export const deleteEmargement = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Erreur lors de la suppression de l'émargement", error });
     }
 };
+
+export const getEmargementsByTeacher = async (req: Request, res: Response) => {
+    try {
+        const { teacherId } = req.query;
+        if (!teacherId) {
+            return res.status(400).json({ message: "teacherId is required" });
+        }
+        const emargements = await emargementService.getEmargementsByTeacher(teacherId as string);
+        res.json(emargements);
+    } catch (error) {
+        res.status(500).json({ message: "Erreur lors de la récupération des émargements du professeur", error });
+    }
+};

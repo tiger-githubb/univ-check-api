@@ -3,8 +3,6 @@ import { CreateClassSessionDto } from "../dto/class-session.dto";
 import { AcademicYear } from "../entity/AcademicYear.entity";
 import { ClassSession } from "../entity/ClassSession.entity";
 import { Course } from "../entity/Course.entity";
-import { Organisation } from "../entity/Organisation.entity";
-import { Universite } from "../entity/Universite.entity";
 import { User } from "../entity/User.entity";
 
 export class ClassSessionService {
@@ -40,6 +38,7 @@ export class ClassSessionService {
 
     async getAllClassSessions(): Promise<ClassSession[]> {
         return await this.sessionRepository.find({
+            order: { updatedAt: "DESC" },
             relations: { academicYear: true, course: true, professor: true, classRepresentative: true }
         });
     }
@@ -78,5 +77,26 @@ export class ClassSessionService {
 
     async deleteClassSession(id: string): Promise<void> {
         await this.sessionRepository.delete(id);
+    }
+
+    async getClassSessionsByTeacherAndPeriod(teacherId: string, week?: number, day?: string): Promise<ClassSession[]> {
+        let query = this.sessionRepository
+            .createQueryBuilder("session")
+            .leftJoinAndSelect("session.academicYear", "academicYear")
+            .leftJoinAndSelect("session.course", "course")
+            .leftJoinAndSelect("session.professor", "professor")
+            .leftJoinAndSelect("session.classRepresentative", "classRepresentative")
+            .where("session.professor = :teacherId", { teacherId });
+
+        if (week) {
+            // Filter by ISO week number
+            query = query.andWhere("DATEPART(ISO_WEEK, session.date) = :week", { week });
+        }
+        if (day) {
+            // Filter by day of week (e.g., 'Monday')
+            query = query.andWhere("DATENAME(WEEKDAY, session.date) = :day", { day });
+        }
+        query = query.orderBy("session.updatedAt", "DESC");
+        return await query.getMany();
     }
 }

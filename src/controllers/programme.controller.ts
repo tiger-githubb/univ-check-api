@@ -24,7 +24,8 @@ export const getProgrammeById = async (req: Request, res: Response) => {
 
 export const getAllProgrammes = async (req: Request, res: Response) => {
     try {
-        const programmes = await programmeService.getAllProgrammes();
+        const order = (req.query.order === 'asc' || req.query.order === 'desc') ? req.query.order : 'desc';
+        const programmes = await programmeService.getAllProgrammes(order as 'asc' | 'desc');
         res.json(programmes);
     } catch (error) {
         res.status(500).json({ message: "Erreur lors de la récupération des programmes", error });

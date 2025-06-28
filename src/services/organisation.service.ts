@@ -17,8 +17,8 @@ export class OrganisationService {
         });
     }
 
-    async getAllOrganisations(): Promise<Organisation[]> {
-        return await this.organisationRepository.find({ relations: { universites: true } });
+    async getAllOrganisations(order: 'asc' | 'desc' = 'desc'): Promise<Organisation[]> {
+        return await this.organisationRepository.find({ order: { updatedAt: order.toUpperCase() as 'ASC' | 'DESC' }, relations: { universites: true } });
     }
 
     async updateOrganisation(id: string, data: Partial<Organisation>): Promise<Organisation | null> {

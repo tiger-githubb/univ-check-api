@@ -14,8 +14,9 @@ export class SubjectService {
         return await this.subjectRepository.findOne({ where: { id } });
     }
 
-    async getAllSubjects(): Promise<Subject[]> {
-        return await this.subjectRepository.find();
+    async getAllSubjects(order: 'asc' | 'desc' = 'desc'): Promise<Subject[]> {
+        // If Subject does not have updatedAt, fallback to id (UUID) for deterministic order
+        return await this.subjectRepository.find({ order: { id: order.toUpperCase() as 'ASC' | 'DESC' } });
     }
 
     async updateSubject(id: string, data: Partial<Subject>): Promise<Subject | null> {
