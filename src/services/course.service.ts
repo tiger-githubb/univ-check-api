@@ -21,11 +21,11 @@ export class CourseService {
     }
 
     async getCourseById(id: string): Promise<Course | null> {
-        return await this.courseRepository.findOne({ where: { id } });
+        return await this.courseRepository.findOne({ where: { id }, relations: {programme: true} });
     }
 
     async getAllCourses(order: 'asc' | 'desc' = 'desc'): Promise<Course[]> {
-        return await this.courseRepository.find({ order: { updatedAt: order.toUpperCase() as 'ASC' | 'DESC' } });
+        return await this.courseRepository.find({ order: { updatedAt: order.toUpperCase() as 'ASC' | 'DESC' }, relations: {programme: true}});
     }
 
     async updateCourse(id: string, data: Partial<CreateCourseDto>): Promise<Course | null> {
