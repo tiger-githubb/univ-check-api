@@ -20,6 +20,10 @@ export class ProgrammeService {
 
     async getProgrammeById(id: string): Promise<Programme | null> {
         return await this.programmeRepository.findOne({
+            relations: {
+                departement: true,
+                courses: true,
+            },
             where: { id }
         });
     }

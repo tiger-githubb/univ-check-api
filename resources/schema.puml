@@ -87,6 +87,7 @@ ClassSession "1" -- "1" Course : concerne
 ClassSession "1" -- "1" User : donné_par
 ClassSession "1" -- "1" User : validée_par
 
+
 Emargement "1" -- "1" ClassSession : appartient_à
 Emargement "1" -- "1" User : concerne
 

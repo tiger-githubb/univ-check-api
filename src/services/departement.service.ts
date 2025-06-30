@@ -8,14 +8,18 @@ export class DepartementService {
     private readonly universityRepository = AppDataSource.getRepository(Universite);
 
     async createDepartement(data: Partial<CreateDepartementDto>): Promise<Departement> {
-        const university = await this.universityRepository.findOneByOrFail({ id: data.universityId});
-
-        const {universityId, ...rest } = data;
-        const departement = this.departementRepository.create({
-            ...rest,
-            university
-        });
-        return await this.departementRepository.save(departement);
+        try {
+            const university = await this.universityRepository.findOneByOrFail({ id: data.universityId});
+    
+            const {universityId, ...rest } = data;
+            const departement = this.departementRepository.create({
+                ...rest,
+                university
+            });
+            return await this.departementRepository.save(departement);
+        } catch (error) {
+            throw error;
+        }
     }
 
     async getDepartementById(id: string): Promise<Departement | null> {
