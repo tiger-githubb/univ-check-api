@@ -29,9 +29,9 @@ export const AppDataSource = new DataSource({
     database: config.database,
     synchronize: isDev,
     logging: isDev,
-    ssl: {
+    ssl: !isDev ? {
         rejectUnauthorized: false,
-    },
+    } : false,
     entities: [
         Organisation,
         Universite,

@@ -25,14 +25,20 @@ export class EmargementService {
     async getEmargementById(id: string): Promise<Emargement | null> {
         return await this.emargementRepository.findOne({
             where: { id },
-            relations: { classSession: true, professor: true}
+            relations: { classSession: true, professor: true },
+            select: { 
+                professor: {id: true, name: true, role: true, email: true, phone: true},
+            }
         });
     }
 
     async getAllEmargements(): Promise<Emargement[]> {
         return await this.emargementRepository.find({
             order: { updatedAt: "DESC" },
-            relations: { classSession: true, professor: true}
+            relations: { classSession: true, professor: true},
+            select: { 
+                professor: {id: true, name: true, role: true, email: true, phone: true},
+            }
         });
     }
 
@@ -62,8 +68,8 @@ export class EmargementService {
         const emargement = await this.getEmargementById(id);
         if (emargement) {
             if (
-                status === EmargementStatus.CLASS_HEADER_CONFIRMED && emargement.status === EmargementStatus.SUPERVISOR_CONFIRMED 
-                || status === EmargementStatus.SUPERVISOR_CONFIRMED && emargement.status === EmargementStatus.CLASS_HEADER_CONFIRMED
+                (status === EmargementStatus.CLASS_HEADER_CONFIRMED && emargement.status === EmargementStatus.SUPERVISOR_CONFIRMED) 
+                || (status === EmargementStatus.SUPERVISOR_CONFIRMED && emargement.status === EmargementStatus.CLASS_HEADER_CONFIRMED)
             ) {
                 emargement.status = EmargementStatus.PRESENT;
             } else if (emargement.status === EmargementStatus.PENDING && status !== EmargementStatus.PENDING) { // oblige les deux validations
