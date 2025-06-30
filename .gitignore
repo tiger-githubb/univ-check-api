@@ -23,5 +23,3 @@ logs/
 .vscode/
 .idea/
 .vercel
-
-data.json

@@ -39,11 +39,7 @@ export class ClassSessionService {
     async getAllClassSessions(): Promise<ClassSession[]> {
         return await this.sessionRepository.find({
             order: { updatedAt: "DESC" },
-            relations: { academicYear: true, course: true, professor: true, classRepresentative: true },
-            select: { 
-                professor: {id: true, name: true, role: true, email: true, phone: true},
-                classRepresentative: {id: true, name: true, role: true, email: true, phone: true},
-            }
+            relations: { academicYear: true, course: true, professor: true, classRepresentative: true }
         });
     }
 

@@ -5,6 +5,7 @@ const universiteService = new UniversiteService();
 
 export const createUniversite = async (req: Request, res: Response) => {
     try {
+        console.log(req.body);
         const universite = await universiteService.createUniversite(req.body);
         res.status(201).json(universite);
     } catch (error) {

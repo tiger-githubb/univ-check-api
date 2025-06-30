@@ -34,7 +34,7 @@ export class UserService {
     }
 
     async getAllUsers(): Promise<User[]> {
-        return await this.userRepository.find({order: { createdAt: 'DESC' }});
+        return await this.userRepository.find();
     }
 
     async updateUser(id: string, data: Partial<User>): Promise<User | null> {
