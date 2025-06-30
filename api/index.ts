@@ -22,6 +22,7 @@ import classSessionRouter from '../src/routes/classSession.routes';
 import userRouter from '../src/routes/user.routes';
 import emargementRouter from '../src/routes/emargement.routes';
 import notificationRouter from '../src/routes/notification.routes';
+import statisticRouter from '../src/routes/statistics.routes';
 
 dotenv.config();
 const app = express();
@@ -51,6 +52,7 @@ app.use(`${globalPath}/courses`, courseRouter);
 app.use(`${globalPath}/class-sessions`, classSessionRouter);
 app.use(`${globalPath}/emargements`, emargementRouter);
 app.use(`${globalPath}/notifications`, notificationRouter);
+app.use(`${globalPath}/statistics`, statisticRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 const PORT = process.env.PORT || 3000;

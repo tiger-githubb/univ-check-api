@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import { CourseService } from "../services/course.service";
+import { CreateCourseDto } from "../dto/course.dto";
 
 const courseService = new CourseService();
 
 export const createCourse = async (req: Request, res: Response) => {
     try {
-        const course = await courseService.createCourse(req.body);
+        const data = req.body as CreateCourseDto;
+        const course = await courseService.createCourse(data);
         res.status(201).json(course);
     } catch (error) {
         res.status(500).json({ message: "Erreur lors de la création de la matière", error });

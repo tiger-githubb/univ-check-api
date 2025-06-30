@@ -46,10 +46,8 @@ export const getAllUsers = async (req: Request, res: Response) => {
     const cacheKey = "users-list";
     const cachedUsers = cache.get(cacheKey);
     if (cachedUsers) {
-      console.log("Serving from cache");
       return res.status(200).json(cachedUsers);
     }
-    console.log("Serving from DB");
     const users = await userService.getAllUsers();
     // Stocke les utilisateurs en cache pour 6000 ms (6 secondes)
     cache.put(cacheKey, users, 6000);

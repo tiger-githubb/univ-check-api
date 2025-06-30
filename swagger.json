@@ -1901,6 +1901,312 @@
           }
         }
       }
+    },
+    "/api/v1/statistics/business": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get general statistics (émargement, taux de présence, cours, validations en attente)",
+        "parameters": [
+          {
+            "name": "universityId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de l'université"
+          },
+          {
+            "name": "departmentId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID du département"
+          },
+          {
+            "name": "professorId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de l'enseignant"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "PRESENT",
+                "ABSENT",
+                "SUPERVISOR_CONFIRMED",
+                "CLASS_HEADER_CONFIRMED"
+              ]
+            },
+            "description": "Status de l'émargement"
+          },
+          {
+            "name": "courseId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID du cours ou de la matière"
+          },
+          {
+            "name": "dateRange[start]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Date de début du filtre"
+          },
+          {
+            "name": "dateRange[end]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Date de fin du filtre"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Statistiques générales",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticRepDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statistics/admin": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get admin statistics (programmes, départements, cours, universités, professeurs, émargements)",
+        "parameters": [
+          {
+            "name": "universityId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de l'université"
+          },
+          {
+            "name": "departmentId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID du département"
+          },
+          {
+            "name": "dateRange[start]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Date de début du filtre"
+          },
+          {
+            "name": "dateRange[end]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Date de fin du filtre"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Statistiques administrateur",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminStatisticRepDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statistics/prof/{id}": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get statistics for a specific professor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID du professeur"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Statistiques du professeur",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticRepDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statistics/bulk": {
+      "post": {
+        "tags": [
+          "Statistics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-hidden": true,
+        "summary": "Create bulk departments",
+        "description": "Allows the creation of multiple departments, including their programmes and courses, in bulk.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the department"
+                    },
+                    "universityId": {
+                      "type": "string",
+                      "description": "Identifier of the university"
+                    },
+                    "programmes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the programme"
+                          },
+                          "cours": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "description": "Name of the course"
+                                },
+                                "volumeHoraire": {
+                                  "type": "number",
+                                  "description": "Number of hours for the course"
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "volumeHoraire"
+                              ]
+                            },
+                            "description": "List of courses in the programme"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "cours"
+                        ]
+                      },
+                      "description": "List of programmes in the department"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "universityId",
+                    "programmes"
+                  ]
+                }
+              },
+              "example": [
+                {
+                  "name": "Department of Computer Science",
+                  "universityId": "uni-123",
+                  "programmes": [
+                    {
+                      "name": "Software Engineering",
+                      "cours": [
+                        {
+                          "name": "Algorithms",
+                          "volumeHoraire": 40
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Bulk statistics created successfully"
+          },
+          "400": {
+            "description": "Invalid request body"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2490,6 +2796,47 @@
           "professorId",
           "status"
         ]
+      },
+      "StatisticRepDto": {
+        "type": "object",
+        "properties": {
+          "totalEmargements": {
+            "type": "integer"
+          },
+          "professeurPresenceRate": {
+            "type": "number",
+            "format": "float"
+          },
+          "totalCourses": {
+            "type": "integer"
+          },
+          "pendingEmargementValidations": {
+            "type": "integer"
+          }
+        }
+      },
+      "AdminStatisticRepDto": {
+        "type": "object",
+        "properties": {
+          "totalProgrammes": {
+            "type": "integer"
+          },
+          "totalDepartements": {
+            "type": "integer"
+          },
+          "totalCourses": {
+            "type": "integer"
+          },
+          "totalUniversities": {
+            "type": "integer"
+          },
+          "totalProfesseurs": {
+            "type": "integer"
+          },
+          "totalEmargements": {
+            "type": "integer"
+          }
+        }
       },
       "Notification": {
         "type": "object",
