@@ -1,17 +1,21 @@
-import {connectDB} from "../src/config/data-source";
-const express = require("express");
-import { Request, Response } from "express";
+import http from "http";
+import express, { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import "reflect-metadata";
-import { errorHandler } from "../src/middleware/errorHandler";
-import { authRouter } from "../src/routes/auth.routes";
-const swaggerJSDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
 import * as fs from "fs";
 import path from "path";
 import cors from "cors";
+import { Server } from "socket.io";
+
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+import {connectDB} from "../src/config/data-source";
+import { errorHandler } from "../src/middleware/errorHandler";
+import { SocketGateway } from "../src/socket/socket.gateway";
 
 // Importer les routes
+import { authRouter } from "../src/routes/auth.routes";
 import organisationRouter from '../src/routes/organisation.routes';
 import universiteRouter from '../src/routes/universite.routes';
 import departementRouter from '../src/routes/departement.routes';
@@ -35,6 +39,14 @@ const swaggerOptions = {
     apis: ["./src/routes/*.ts"], // ajouter des routes documentées ici
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: "*" },
+});
+// Instanciate the gateway
+const socketGateway = new SocketGateway(io);
+
 
 // Middlewares
 app.use(cors());
