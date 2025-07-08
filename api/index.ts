@@ -40,12 +40,12 @@ const swaggerOptions = {
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
-const server = http.createServer(app);
-const io = new Server(server, {
-  cors: { origin: "*" },
-});
-// Instanciate the gateway
-const socketGateway = new SocketGateway(io);
+// const server = http.createServer(app);
+// const io = new Server(server, {
+//   cors: { origin: "*" },
+// });
+// // Instanciate the gateway
+// const socketGateway = new SocketGateway(io);
 
 
 // Middlewares
@@ -67,10 +67,17 @@ app.use(`${globalPath}/notifications`, notificationRouter);
 app.use(`${globalPath}/statistics`, statisticRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: "*" },
+});
+// Instanciate the gateway
+const socketGateway = new SocketGateway(io);
+
 const PORT = process.env.PORT || 3000;
 
 connectDB().then(() => {
-    app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`));
+    server.listen(PORT, () => console.log(`Server + Socket running on port http://localhost:${PORT}`));
 }).catch((error) => {
     console.error("Database connection error:", error);
 });
@@ -84,3 +91,4 @@ app.get("*", (req: Request, res: Response) => {
 
 
 module.exports = app;
+export default socketGateway;
