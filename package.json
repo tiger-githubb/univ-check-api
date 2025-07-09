@@ -41,6 +41,7 @@
       "pg-connection-string": "^2.7.0",
       "reflect-metadata": "^0.1.13",
       "serverless-http": "^3.2.0",
+      "socket.io": "^4.8.1",
       "swagger-jsdoc": "^6.2.8",
       "swagger-ui-express": "^5.0.1",
       "typeorm": "0.3.17",
